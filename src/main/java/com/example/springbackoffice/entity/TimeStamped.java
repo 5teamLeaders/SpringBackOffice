@@ -18,11 +18,11 @@ public abstract class TimeStamped {
     @CreatedDate
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-mm-dd")
     @LastModifiedDate
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modified_at;
 }
