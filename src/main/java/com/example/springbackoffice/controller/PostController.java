@@ -6,6 +6,7 @@ import com.example.springbackoffice.dto.PostRequestDto;
 import com.example.springbackoffice.dto.PostResponseDto;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.PostService;
+import com.example.springbackoffice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.example.springbackoffice.entity.User;
 import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
 
 
     @OneToMany( mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>()
+    private List<Comment> commentList = new ArrayList<>();
 
 
     public Post(PostRequestDto requestDto, User user) {
@@ -50,6 +52,6 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
 
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
+        this.contents = postRequestDto.getContent();
     }
 }
