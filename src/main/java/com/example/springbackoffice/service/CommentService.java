@@ -3,8 +3,6 @@ package com.example.springbackoffice.service;
 import com.example.springbackoffice.dto.CommentRequestDto;
 import com.example.springbackoffice.dto.CommentResponseDto;
 import com.example.springbackoffice.entity.Comment;
-import com.example.springbackoffice.entity.Post;
-import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.repository.CommentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

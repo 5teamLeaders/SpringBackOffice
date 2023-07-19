@@ -3,16 +3,13 @@ package com.example.springbackoffice.controller;
 import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.CommentRequestDto;
 import com.example.springbackoffice.dto.CommentResponseDto;
-import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
 
@@ -69,4 +66,4 @@ public class CommentController {
 
 }
 
-//커밋용 수정
+//커밋용 수정용
