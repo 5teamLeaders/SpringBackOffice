@@ -11,7 +11,7 @@ public class CommentResponseDto extends ApiResponseDto{
 
 
     private String contents; // 본문
-    private String userName;
+    private String username;
     private LocalDateTime created_at;
     private LocalDateTime modified_at;
     private Long post_id;
@@ -21,7 +21,7 @@ public class CommentResponseDto extends ApiResponseDto{
         super();
         this.post_id = comment.getId();
         this.contents = comment.getContents();
-        this.userName = comment.getUser().getUsername();
+        this.username = comment.getUser().getUsername();
         this.created_at =comment.getPost().getCreatedAt();
         this.modified_at = comment.getPost().getModifiedAt();
     }
