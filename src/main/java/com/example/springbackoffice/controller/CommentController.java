@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.RejectedExecutionException;
 
-본
+
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
