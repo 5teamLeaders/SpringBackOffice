@@ -10,10 +10,10 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String contents;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private LocalDateTime created_at;
+    private LocalDateTime modified_at;
     private Long user_id;
-    private String userName;
+    private String username;
     private String userNickName;
     private List<CommentResponseDto> commentResponseDtoList;
     private Integer post_like_count;
@@ -22,11 +22,11 @@ public class PostResponseDto {
         this.id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
-        this.createdAt = post.getCreatedAt();
-        this.modifiedAt = post.getModifiedAt();
+        this.created_at = post.getCreated_at();
+        this.modified_at = post.getModified_at();
         this.post_like_count = post.getPost_like_count();
         this.user_id = post.getUser().getId();
-        this.userName = post.getUser().getName();
+        this.username = post.getUser().getName();
         this.userNickName = post.getUser().getNickname();
         if(post.getCommentList().size()>0) {
             this.commentResponseDtoList = new ArrayList<>();
