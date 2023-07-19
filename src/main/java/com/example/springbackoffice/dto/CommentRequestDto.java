@@ -8,5 +8,5 @@ import lombok.Setter;
 public class CommentRequestDto {
 
 
-    private String body; //게시글 본문
+    private String contents; //게시글 본문
 }

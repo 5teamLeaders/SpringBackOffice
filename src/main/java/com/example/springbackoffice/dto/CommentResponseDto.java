@@ -10,19 +10,19 @@ import java.time.LocalDateTime;
 public class CommentResponseDto extends ApiResponseDto{
 
 
-    private String body; // 본문
+    private String contents; // 본문
     private String userName;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private LocalDateTime created_at;
+    private LocalDateTime modified_at;
     private Long post_id;
 
     public CommentResponseDto(Comment comment) {
 
         super();
         this.post_id = comment.getId();
-        this.body = comment.getBody();
+        this.contents = comment.getContents();
         this.userName = comment.getUser().getUsername();
-        this.createdAt =comment.getPost().getCreatedAt();
-        this.modifiedAt = comment.getPost().getModifiedAt();
+        this.created_at =comment.getPost().getCreatedAt();
+        this.modified_at = comment.getPost().getModifiedAt();
     }
 }

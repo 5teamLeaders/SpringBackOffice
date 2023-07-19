@@ -40,7 +40,7 @@ public class CommentService {
             throw new RejectedExecutionException();
         }
 
-        comment.setBody(requestDto.getBody());
+        comment.setContents(requestDto.getContents());
 
         return new CommentResponseDto(comment);
     }

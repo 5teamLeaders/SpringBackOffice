@@ -18,7 +18,7 @@ public class Comment extends TimeStamped {
     private Long id;
 
     @Column(nullable = false)
-    private String body; // 댓글 본문
+    private String contents; // 댓글 본문
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -29,7 +29,7 @@ public class Comment extends TimeStamped {
     private User user; // 글쓴이와 연관 관계
 
     public Comment(CommentRequestDto commentRequestDto, User user, Post post) {
-        this.body = commentRequestDto.getBody();
+        this.contents = commentRequestDto.getContents();
         this.user = user;
         this.post = post;
     }
