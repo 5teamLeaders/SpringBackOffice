@@ -4,6 +4,7 @@ import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.PostRequestDto;
 import com.example.springbackoffice.dto.PostResponseDto;
 import com.example.springbackoffice.entity.Post;
+import com.example.springbackoffice.repository.CommentRepository;
 import com.example.springbackoffice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +64,7 @@ public class PostService {
 
         Optional<Post> post = postRepository.findById(id); // 해당id의 Post 가져오기
 
-        if (!post.isPresent() || !Objects.equals(post.get().getUser().getName(), user.getName())) {
+        if (!post.isPresent() || !Objects.equals(post.get().getUser().getUsername(), user.getUsername())) {
             log.error("게시글이 존재하지 않거나 게시글 작성자가 아닙니다.");
             return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "게시글 수정 실패"));
         }

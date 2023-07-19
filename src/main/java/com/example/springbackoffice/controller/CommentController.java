@@ -3,6 +3,7 @@ package com.example.springbackoffice.controller;
 import com.example.springbackoffice.dto.ApiResponseDto;
 import com.example.springbackoffice.dto.CommentRequestDto;
 import com.example.springbackoffice.dto.CommentResponseDto;
+import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

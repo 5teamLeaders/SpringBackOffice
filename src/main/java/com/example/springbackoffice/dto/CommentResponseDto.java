@@ -1,5 +1,6 @@
 package com.example.springbackoffice.dto;
 
+import com.example.springbackoffice.entity.Comment;
 import lombok.Getter;
 import lombok.Setter;
 

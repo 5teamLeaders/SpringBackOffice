@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "comment")
-public class Comment extends TimeStamped {
+public class Comment extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,11 @@ public class Comment extends TimeStamped {
     @JoinColumn(name = "user_id")
     private User user; // 글쓴이와 연관 관계
 
-    public Comment(CommentRequestDto commentRequestDto, User user, Post post) {
+    public Comment(CommentRequestDto commentRequestDto,User user, Post post)
+    {
         this.contents = commentRequestDto.getContents();
         this.user = user;
         this.post = post;
     }
+
 }

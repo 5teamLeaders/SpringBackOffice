@@ -2,6 +2,9 @@ package com.example.springbackoffice.service;
 
 import com.example.springbackoffice.dto.CommentRequestDto;
 import com.example.springbackoffice.dto.CommentResponseDto;
+import com.example.springbackoffice.entity.Comment;
+import com.example.springbackoffice.entity.Post;
+import com.example.springbackoffice.entity.User;
 import com.example.springbackoffice.repository.CommentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     // 댓글 생성
-    public CommentResponseDto createComment(CommentRequestDto commentRequestDto, Long id, User user){ //게시글과 유저 정보 파라미터
+    public CommentResponseDto createComment(CommentRequestDto commentRequestDto,Long id, User user){ //게시글과 유저 정보 파라미터
         Post post = postService.findPost(id); // 게시글 존재하면 가져오기
 
         Comment comment = new Comment(commentRequestDto,user,post); // comment 본문
@@ -36,7 +39,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElseThrow();
 
         //작성자 확인
-        if (!comment.getUser().getUserId().equals(user.getUserId())) {
+        if (!comment.getUser().getId().equals(user.getId())) { // getUserId -> Id 로 바꿔야하는지
             throw new RejectedExecutionException();
         }
 
@@ -51,7 +54,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(id).orElseThrow();
 
         // 요청자가 운영자 이거나 댓글 작성자(post.user) 와 요청자(user) 가 같은지 체크
-        if (!comment.getUser().getUserId().equals(user.getUserId())) {
+        if (!comment.getUser().getId().equals(user.getId())) {
             throw new RejectedExecutionException();
         }
 
