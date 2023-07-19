@@ -22,7 +22,7 @@ public class CommentResponseDto extends ApiResponseDto{
         this.post_id = comment.getId();
         this.contents = comment.getContents();
         this.username = comment.getUser().getUsername();
-        this.created_at =comment.getPost().getCreatedAt();
-        this.modified_at = comment.getPost().getModifiedAt();
+        this.created_at =comment.getPost().getCreated_at();
+        this.modified_at = comment.getPost().getModified_at();
     }
 }
