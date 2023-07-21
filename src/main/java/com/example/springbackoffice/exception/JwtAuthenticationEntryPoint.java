@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+//@Component
 //JwtAuthenticationEntryPoint 객체가 생성되어 관리
 @RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint { // JWT 인증에 실패한 경우 처리하기 위한 커스텀 핸들러
