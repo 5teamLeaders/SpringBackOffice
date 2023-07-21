@@ -12,7 +12,7 @@ public class CommentResponseDto extends ApiResponseDto{
 
     private Long id;
     private String contents; // 본문
-    private String username;
+    private String userName;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Integer commentLikeCount;
@@ -20,7 +20,7 @@ public class CommentResponseDto extends ApiResponseDto{
 
         this.id = comment.getId();
         this.contents = comment.getContents();
-        this.username = comment.getUser().getUsername();
+        this.userName = comment.getUser().getUsername();
         this.createdAt =comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
         this.commentLikeCount = comment.getCommentLikedCount();
