@@ -102,9 +102,10 @@
         <input type="text" id="text" class="form-control" aria-label="Sizing example text" aria-describedby="text-sizing">
       </div>
     </div>
-    <div class="input-group textarea-group">
-      <textarea class="form-control" id="content" aria-label="With textarea" rows="15"></textarea>
-    </div>`
+     <div class="d-flex justify-content-center mt-3">
+        <button type="submit" class="btn btn-dark btn-lg me-5 w-25" onclick="writePost()">Upload</button>
+        <button type="submit" class="btn btn-dark btn-lg me-5 w-25" onclick="location.href='/'">Cancel</button>
+      </div>`
       $('#body').append(html);
     }
 
@@ -122,10 +123,10 @@
         url:'/api/post',
         contentType: "application/json",
         data: JSON.stringify(data),
-        success: function(response) {
+        success: function() {
           alert("게시글 등록 성공");
           window.location.href = "/";
-        }, error: function(req,status,error) {
+        }, error: function() {
           alert("게시글 등록 실패");
         }
       })
