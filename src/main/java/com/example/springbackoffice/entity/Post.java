@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,8 +26,11 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     @Column(nullable = false, length = 3000)
     private String contents;
 
-    @Column(nullable = true)
-    private Integer post_like_count;
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private Integer postLikeCount;
 
     @JsonIgnore
     @ManyToOne
@@ -32,22 +38,23 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private User user;
 
 
-//    @OneToMany( mappedBy = "post", cascade = CascadeType.ALL)
-//    private List<Comment> commentList = new ArrayList<>();
+    @OneToMany( mappedBy = "post",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 
 
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.user = user;
+        this.postLikeCount = 0;
     }
-
-//    public void addComment(Comment comment) {
-//        this.commentList.add(comment);
-//    }
 
     public void updatePost(PostRequestDto postRequestDto) {
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();
+    }
+
+    public void setPostLikedCount(Integer postLikedCount) {
+        this.postLikeCount = postLikedCount;
     }
 }
