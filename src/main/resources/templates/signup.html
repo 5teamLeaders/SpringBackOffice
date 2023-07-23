@@ -10,54 +10,24 @@
   <link rel="stylesheet" type="text/css" href="/css/style.css">
   <meta charset="UTF-8">
   <title>회원가입 페이지</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
+  <style>
 
-    function onclickAdmin() {
-      // Get the checkbox
-      var checkBox = document.getElementById("admin-check");
-      // Get the output text
-      var box = document.getElementById("admin-token");
+    html, body {
 
-      // If the checkbox is checked, display the output text
-      if (checkBox.checked == true){
-        box.style.display = "block";
-      } else {
-        box.style.display = "none";
-      }
+      margin: 0;
+
+      height: 100%;
+
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+
     }
 
-    $(document).ready(function () {
-      $("#signupButton").click(function (e) {
-        e.preventDefault();
-        var formData = {
-          "username": $("#username").val(),
-          "password": $("#password").val(),
-          "email": $("#email").val(),
-          "admin": $("#admin").prop("checked"),
-          "adminToken": $("#adminToken").val()
-        }
-
-        $.ajax({
-          type: "POST",
-          url: "/api/auth/signup",
-          data: JSON.stringify(formData),
-          contentType: "application/json; charset=utf-8",
-          dataType: "json"
-        })
-                .then(function(response) {
-                  // 성공적으로 응답 받은 경우의 처리
-                  // 예: 회원가입 성공 시 로그인 페이지로 이동
-                  window.location.href = "/api/auth/login";
-                }, function(xhr, status, error) {
-                  // 에러가 발생한 경우의 처리
-                  // 예: 중복된 아이디로 인한 에러 메시지 출력
-                  var errorMessage = JSON.parse(xhr.responseText).error;
-                  alert(errorMessage);
-                })
-      })
-    })
-  </script>
+  </style>
 </head>
 <body>
 <div id="login-form">
@@ -74,11 +44,71 @@
     <input type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">
 
     <div>
-      <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
-      <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
+      <input id="admin" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
+      <input id="adminToken" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
     </div>
-    <button id="signupButton">회원 가입</button>
+    <button type="button" onclick=signup()>회원 가입</button>
   </form>
 </div>
 </body>
+
+<script>
+  function onclickAdmin() {
+    let admin = document.getElementById('admin').checked;
+    let adminTokenInput = document.getElementById('adminToken');
+    adminTokenInput.style.display = admin ? "block" : "none";
+  }
+  function signup() {
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let email = document.getElementById('email').value;
+    let admin = document.getElementById('admin').checked;
+    let adminToken = document.getElementById('adminToken').value;
+
+    if (!isValidUsername(username)) {
+      alert("아이디는 최소 4자 이상, 10자 이하이며 알파벳 소문자(a~z), 숫자(0~9)로 구성되어야 합니다.");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      alert("비밀번호는 최소 8자 이상, 15자 이하이며 알파벳 대소문자(a~z, A~Z), 숫자, 특수문자로 구성되어야 합니다.");
+      return;
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api/auth/signup");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function () {
+      if (xhr.status === 201) {
+        alert("회원가입이 완료되었습니다!");
+        // 여기서 회원가입 성공 시 원하는 동작을 수행할 수 있습니다.
+        // 예를 들어 로그인 페이지로 이동하거나 다른 작업을 수행할 수 있습니다.
+        window.location.href = "/login-page";
+      } else if (xhr.status === 400) {
+        let response = JSON.parse(xhr.responseText);
+        alert("회원가입 실패: " + response.message);
+        // 회원가입 실패 시 사용자에게 실패 메시지를 보여줄 수 있습니다.
+      }
+    };
+    xhr.onerror = function () {
+      alert("요청 실패!");
+    };
+
+    let data = JSON.stringify({ "username": username, "password": password, "email": email, "admin": admin, "adminToken": adminToken});
+    xhr.send(data);
+
+    // 아이디 검증 함수
+    function isValidUsername(username) {
+      const usernameRegex = /^[a-z0-9]{4,10}$/;
+      return usernameRegex.test(username);
+    }
+
+    // 비밀번호 검증 함수
+    function isValidPassword(password) {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
+      return passwordRegex.test(password);
+    }
+
+  }
+</script>
 </html>

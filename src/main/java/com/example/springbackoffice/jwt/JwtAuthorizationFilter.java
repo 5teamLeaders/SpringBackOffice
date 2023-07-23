@@ -39,6 +39,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
         String tokenValue = jwtUtil.getJwtFromHeader(req);
 
+//        String requestURI = req.getRequestURI(); //로그인 페이지 인증예외처리 -> 해도 401 나옴
+//
+//        if ("/login-page".equals(requestURI)) {
+//            filterChain.doFilter(req, res);
+//            return;
+//        }
+
         if (StringUtils.hasText(tokenValue)) {
             if(!jwtUtil.validateToken(tokenValue)) {
                 ApiResponseDto responseDto = new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "토큰이 유효하지 않습니다.");

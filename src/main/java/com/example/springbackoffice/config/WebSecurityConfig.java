@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,7 +29,7 @@ public class WebSecurityConfig {
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
     private final ObjectMapper objectMapper;
-//    private final AuthenticationEntryPoint jwtAuthenticationEntryPoint; 수정
+    private final AuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final AccessDeniedHandler customAccessDeniedHandler;
 
     @Bean //BCryptPasswordEncoder 를 Bean 으로 등록하여 비밀번호를 암호화하는 데 사용
@@ -63,13 +62,17 @@ public class WebSecurityConfig {
         // authorizeHttpRequests : HTTP 요청에 대한 접근 권한 설정
         // requestMatchers : 특정 요청 매처에 대한 접근 권한 설정을 지정
         http.authorizeHttpRequests((authorizeHttpRequests) ->
-                authorizeHttpRequests
-
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
-                        .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll() // 게시글 조회는 인증없이도 가능하기 때문에 허가해준다. -> posts 의 get 요청들 2개 빼고 인가받게 설정
-                        .requestMatchers("/api/auth/**").permitAll() //HttpMethod.Post 추가 -> console에서 get 오류는 사라졌지만 여전히 devtools 에서는 get요청 발생
-                        .requestMatchers("/api/users/**").permitAll() // '/api/users/'로 시작하는 요청 모두 접근 허가
-                        .anyRequest().authenticated() // 그 외 모든 요청 인증처리
+                        authorizeHttpRequests
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+                                .requestMatchers(HttpMethod.GET,"/api/post/**").permitAll() // 게시글 조회는 인증없이도 가능하기 때문에 허가해준다. -> posts 의 get 요청들 2개 빼고 인가받게 설정
+                                .requestMatchers(HttpMethod.GET,"/api/follow/**").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/login-page").permitAll()
+                                .requestMatchers("/signup-page").permitAll()
+                                .requestMatchers("/api/admin/**").permitAll()
+                                .requestMatchers("/api/user/**").permitAll()
+                                .requestMatchers("/api/users/**").permitAll() // '/api/users/'로 시작하는 요청 모두 접근 허가
+                                .anyRequest().authenticated() // 그 외 모든 요청 인증처리
 
         );
         // 폼로그인 활성화시 코드
@@ -83,8 +86,8 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // 접근 거부 및 인증 예외 처리를 위한 핸들러를 설정
-        http.exceptionHandling((exceptionHandling)->exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
-//        http.exceptionHandling((exceptionHandling)->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)); 수정
+//        http.exceptionHandling((exceptionHandling)->exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
+//        http.exceptionHandling((exceptionHandling)->exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint));
         return http.build();        // SecurityFilterChain을 생성
     }
 }

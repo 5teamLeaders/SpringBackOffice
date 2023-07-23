@@ -38,6 +38,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(new ApiResponseDto(HttpStatus.BAD_REQUEST.value(), "이미 존재하는 id 입니다. 다른 id를 입력해 주세요"));
         }
         return ResponseEntity.status(201).body(new ApiResponseDto(HttpStatus.CREATED.value(), "회원가입 완료 되었습니다."));
+
     }
 
 
