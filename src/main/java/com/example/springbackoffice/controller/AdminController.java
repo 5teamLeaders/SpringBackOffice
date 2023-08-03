@@ -7,6 +7,8 @@ import com.example.springbackoffice.security.UserDetailsImpl;
 import com.example.springbackoffice.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,8 @@ public class AdminController {
 
     // 유저 전체 정보 조회
     @GetMapping("/admin/show-users")
-    public List<UserResponseDto> showUsers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return adminService.showUsers(userDetails);
+    public ResponseEntity<List<UserResponseDto>> showUsers(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+         return ResponseEntity.status(HttpStatus.OK).body(adminService.showUsers(userDetails));
     }
 
     // 글 전체 정보 조회
@@ -52,7 +54,7 @@ public class AdminController {
 
     //관리자 페이지 - 유저 수정 기능
     @PutMapping("/admin/user/{id}")
-    public ApiResponseDto editUserProfile(@PathVariable Long id, @RequestBody SignupRequestDto signupRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<ApiResponseDto> editUserProfile(@PathVariable Long id, @RequestBody SignupRequestDto signupRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
        return adminService.editUserProfile(id, signupRequestDto, userDetails);
     }
 

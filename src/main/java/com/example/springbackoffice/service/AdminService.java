@@ -13,6 +13,7 @@ import com.example.springbackoffice.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,7 +95,7 @@ public class AdminService {
 
     // 관리자 - 유저 정보 변경
     @Transactional
-    public ApiResponseDto editUserProfile(Long id, SignupRequestDto signupRequestDto, UserDetailsImpl userDetails) {
+    public ResponseEntity <ApiResponseDto> editUserProfile(Long id, SignupRequestDto signupRequestDto, UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
         checkRole(user);
 
@@ -106,11 +107,11 @@ public class AdminService {
             User foundUser = optionalUser.get();
 
             if (passwordEncoder.matches(signupRequestDto.getPassword(), foundUser.getPassword())) {
-                return new ApiResponseDto(400, "같은 비밀번호로 변경할 수 없습니다.", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.ACCEPTED.value(), "같은 비밀번호로 변경할 수 없습니다."));
             }
 
             if (userRepository.findByUsername(signupRequestDto.getUsername()).isPresent()) {
-                return new ApiResponseDto(400, "해당 유저는 이미 존재합니다.", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.ACCEPTED.value(), "해당 유저는 이미 존재합니다."));
             }
 
             foundUser.setUsername(signupRequestDto.getUsername());
@@ -120,11 +121,11 @@ public class AdminService {
 
             userRepository.save(foundUser);
 
-            return new ApiResponseDto(202, "유저 정보를 수정하였습니다.", HttpStatus.ACCEPTED);
         } else {
             // 해당 id에 해당하는 유저가 존재하지 않는 경우 에러를 Api 반환.
-            return new ApiResponseDto(400, "해당 유저는 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(400).body(new ApiResponseDto(HttpStatus.ACCEPTED.value(), "해당 유저는 존재하지 않습니다."));
         }
+        return ResponseEntity.status(200).body(new ApiResponseDto(HttpStatus.ACCEPTED.value(), "유저 정보 변경이 되었습니다"));
     }
 
     // 괸리자 - 유저 삭제

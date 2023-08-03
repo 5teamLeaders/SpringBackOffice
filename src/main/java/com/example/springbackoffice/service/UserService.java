@@ -5,13 +5,8 @@ import com.example.springbackoffice.dto.requestdto.ProfileEditRequestDto;
 import com.example.springbackoffice.dto.requestdto.SignupRequestDto;
 import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.example.springbackoffice.dto.responsedto.ProfileResponseDto;
-import com.example.springbackoffice.entity.PasswordHistory;
-import com.example.springbackoffice.entity.TokenBlacklist;
-import com.example.springbackoffice.entity.User;
-import com.example.springbackoffice.entity.UserRoleEnum;
-import com.example.springbackoffice.repository.PasswordRepository;
-import com.example.springbackoffice.repository.TokenBlacklistRepository;
-import com.example.springbackoffice.repository.UserRepository;
+import com.example.springbackoffice.entity.*;
+import com.example.springbackoffice.repository.*;
 import com.example.springbackoffice.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -31,6 +27,8 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final PasswordRepository passwordRepository;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     private final UserRepository userRepository;
     private final TokenBlacklistRepository tokenBlacklistRepository;
@@ -84,16 +82,22 @@ public class UserService {
         User user = new User(username, password, email, role);
         userRepository.save(user);
     }
+
     //회원 정보 조회
     @Transactional (readOnly = true)
     public ProfileResponseDto showProfile(UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
 
+//        List<Post> postList1 = user.getPostList();
+
         if (user == null) {
             throw new IllegalArgumentException("로그인 또는 토큰 값을 확인 해주세요");
         }
 
-        return new ProfileResponseDto(user);
+        List<Post> postList = postRepository.findAllByUser(user);
+        List<Comment> commentList = commentRepository.findAllByUser(user);
+
+        return new ProfileResponseDto(user, postList, commentList);
     }
 
     //회원 정보 변경

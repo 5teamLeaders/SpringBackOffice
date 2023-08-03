@@ -56,6 +56,7 @@ public class CommentService {
     }
 
     //댓글 삭제
+    @Transactional
     public void deleteComment(Long id, User user) {
 
         Comment comment = commentRepository.findById(id).orElseThrow();

@@ -1,11 +1,15 @@
 package com.example.springbackoffice.dto.responsedto;
 
+import com.example.springbackoffice.entity.Comment;
+import com.example.springbackoffice.entity.Post;
 import com.example.springbackoffice.entity.User;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -15,20 +19,17 @@ public class ProfileResponseDto {
 
     private String username;
     private String selfIntroduction;
-    private List<PostResponseDto> blogList;
+    private List<PostResponseDto> postList;
     private List<CommentResponseDto> commentList;
 
 
-
-    // Profile 변경 ResponseDto 현재 프로필 조회시 BlogResponseDto와 CommentResponseDto의 각각 생성자에 맞는 필드가 나오는 것이 아닌, 모든 필드가 나옴
-    public ProfileResponseDto(User user) {
+    public ProfileResponseDto(User user, List<Post> postList, List<Comment> commentList) {
         this.username = user.getUsername();
         this.selfIntroduction = user.getSelfIntroduction();
-        this.blogList = user.getPostList().stream()
-                .map(PostResponseDto::new)
-                .collect(Collectors.toList());
-        this.commentList = user.getCommentList().stream()
-                .map(CommentResponseDto::new)
-                .collect(Collectors.toList());
+        this.postList = postList.stream().map(PostResponseDto::new).collect(Collectors.toList());
+        this.commentList = commentList.stream().map(CommentResponseDto::new).collect(Collectors.toList());
+//        this.commentList = user.getCommentList().stream()
+//                .map(CommentResponseDto::new)
+//                .collect(Collectors.toList());
     }
 }

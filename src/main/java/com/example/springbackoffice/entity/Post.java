@@ -38,9 +38,8 @@ public class Post extends Timestamped { // 상속받아서 createdAt, modifiedAt
     private User user;
 
 
-    @OneToMany( mappedBy = "post",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post",fetch = FetchType.LAZY, cascade = CascadeType.ALL) // fetch타입은 되도록 lazy
     private List<Comment> commentList = new ArrayList<>();
-
 
     public Post(PostRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();

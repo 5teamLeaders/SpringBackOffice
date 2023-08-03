@@ -50,10 +50,10 @@ public class User extends Timestamped {
 //    @ColumnDefault("false")
 //    private Boolean isConfirm;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
     private Long kakaoId;
@@ -75,9 +75,7 @@ public class User extends Timestamped {
         this.username = username;
         this.password = password;
         this.email = email;
-//        쓰려면 User 안에 String email 추가
         this.role = role;
-//        this.isConfirm=false;
         this.followerCount = 0;
         this.followingCount = 0;
     }

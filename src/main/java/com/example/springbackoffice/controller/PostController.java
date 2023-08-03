@@ -1,4 +1,5 @@
 package com.example.springbackoffice.controller;
+
 import com.example.springbackoffice.dto.responsedto.ApiResponseDto;
 import com.example.springbackoffice.dto.requestdto.PostRequestDto;
 import com.example.springbackoffice.dto.responsedto.PostResponseDto;
@@ -50,7 +51,7 @@ public class PostController {
 
     @PutMapping("/post/{id}") // 상세 게시글 수정
     public ResponseEntity<ApiResponseDto> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.updatePost(id,postRequestDto,userDetails.getUser());
+        return postService.updatePost(id, postRequestDto, userDetails.getUser());
     }
 
     @DeleteMapping("/post/{id}") // 상세 게시글 삭제
