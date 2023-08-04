@@ -28,7 +28,7 @@ public class AdminController {
         return adminService.showSummary(userDetails);
     }
 
-    // 관리자 페이지 - (유저 + 글 + 댓글)
+    // 관리자 페이지 (유저 + 글 + 댓글)
     @GetMapping("/admin/page")
     public List<AdminResponseDto> showAdminPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return adminService.showAdminPage(userDetails);
